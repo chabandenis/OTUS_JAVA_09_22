@@ -3,24 +3,24 @@
  */
 package ru.otus;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 /**
- *
  * To start the application:
  * ./gradlew build
  * java -jar ./L01-gradle/build/libs/gradleHelloWorld-0.1.jar
- *
+ * <p>
  * To unzip the jar:
  * unzip -l L01-gradle.jar
  * unzip -l gradleHelloWorld-0.1.jar
- *
  */
-public class App {
+public class HelloOtus {
     public static void main(String... args) {
         List<Integer> example = new ArrayList<>();
         int min = 0;
@@ -30,5 +30,16 @@ public class App {
         }
 
         System.out.println(Lists.reverse(example));
+        T1 t = new T1();
+        t.init();
+    }
+}
+
+class T1 {
+    public void init() {
+        System.out.println(MoreObjects.toStringHelper(this)
+                .omitNullValues()
+                .add("lastName", "Chaban")
+                .add("firstName", null));
     }
 }
