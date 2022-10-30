@@ -3,7 +3,7 @@ package homework;
 public class Customer {
     private final long id;
     private String name;
-    private Long scores;
+    private long scores;
 
     //todo: 1. в этом классе надо исправить ошибки
 
@@ -25,12 +25,12 @@ public class Customer {
         this.name = name;
     }
 
-    public long getScores() {
+    public Long getScores() {
         return scores;
     }
 
     public void setScores(long scores) {
-        this.scores = scores;
+//        this.scores = scores;
     }
 
     @Override
