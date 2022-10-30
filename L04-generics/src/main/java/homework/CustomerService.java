@@ -17,13 +17,16 @@ public final class CustomerService {
         Map<Customer, String> lst2 = new HashMap<>();
 
         for (Map.Entry<Customer, String> entry : lst.entrySet()) {
-            lst2.put(entry.getKey(),  entry.getValue());
+            lst2.put(new Customer(entry.getKey().getId(),
+                    entry.getKey().getName(),
+                    entry.getKey().getScores()
+            ), entry.getValue());
         }
 
         Map.Entry<Customer, String> forRet = null;
 
         for (Map.Entry<Customer, String> entry : lst2.entrySet()) {
-            lst2.put(entry.getKey(),  entry.getValue());
+            lst2.put(entry.getKey(), entry.getValue());
             Customer cst = entry.getKey();
             if (forRet == null) {
                 forRet = entry;
