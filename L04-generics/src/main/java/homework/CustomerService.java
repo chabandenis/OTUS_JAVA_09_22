@@ -3,22 +3,28 @@ package homework;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-public class CustomerService {
+public final class CustomerService {
 
-    Map<Customer, String> lst = new HashMap<>();
+    private final Map<Customer, String> lst = new HashMap<>();
 
     //todo: 3. надо реализовать методы этого класса
     //важно подобрать подходящую Map-у, посмотрите на редко используемые методы, они тут полезны
 
     public Map.Entry<Customer, String> getSmallest() {
         //Возможно, чтобы реализовать этот метод, потребуется посмотреть как Map.Entry сделан в jdk
+        Map<Customer, String> lst2 = new HashMap<>();
+
+        for (Map.Entry<Customer, String> entry : lst.entrySet()) {
+            lst2.put(entry.getKey(),  entry.getValue());
+        }
+
         Map.Entry<Customer, String> forRet = null;
 
-        for (Map.Entry entry : lst.entrySet()) {
-            Customer cst = (Customer) entry.getKey();
+        for (Map.Entry<Customer, String> entry : lst2.entrySet()) {
+            lst2.put(entry.getKey(),  entry.getValue());
+            Customer cst = entry.getKey();
             if (forRet == null) {
                 forRet = entry;
             } else {
@@ -27,6 +33,8 @@ public class CustomerService {
                 }
             }
         }
+
+        Map.Entry<Customer, String> ret = forRet;
 
         return forRet; // это "заглушка, чтобы скомилировать"
     }
