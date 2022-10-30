@@ -3,7 +3,7 @@ package homework;
 public class Customer {
     private final long id;
     private String name;
-    private long scores;
+    private Long scores;
 
     //todo: 1. в этом классе надо исправить ошибки
 
