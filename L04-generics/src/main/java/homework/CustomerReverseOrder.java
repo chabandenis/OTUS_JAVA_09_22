@@ -6,15 +6,13 @@ import java.util.*;
 public class CustomerReverseOrder {
 
     //todo: 2. надо реализовать методы этого класса
-    //надо подобрать подходящую структуру данных, тогда решение будет в "две строчки"
-    TreeSet lst = new TreeSet();
+    Stack<Customer> lst = new Stack<>();
 
     public void add(Customer customer) {
-        lst.add(customer);
+        lst.push(customer);
     }
 
     public Customer take() {
-
-       return null; // это "заглушка, чтобы скомилировать"
+        return lst.pop(); // это "заглушка, чтобы скомилировать"
     }
 }
