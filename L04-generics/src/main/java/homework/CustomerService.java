@@ -22,7 +22,7 @@ public final class CustomerService {
     }
 
     public Map.Entry<Customer, String> getNext(Customer customer) {
-        return lst.higherEntry(customer); // это "заглушка, чтобы скомилировать"
+        return lst.higherEntry(customer);
     }
 
     public void add(Customer customer, String data) {
