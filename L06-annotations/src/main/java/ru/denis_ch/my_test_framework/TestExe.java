@@ -1,6 +1,5 @@
 package ru.denis_ch.my_test_framework;
 
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
@@ -16,7 +15,7 @@ public class TestExe {
     private int errCntAfter;
 
 
-    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchMethodException {
+    public void do_test(String className) {
 
         Set<Method> setBefor = new HashSet<>();
         Set<Method> setTest = new HashSet<>();
@@ -24,7 +23,12 @@ public class TestExe {
 
         TestExe testExe = new TestExe();
 
-        Class cl = Class.forName(args[0]);
+        Class cl = null;
+        try {
+            cl = Class.forName(className);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         Method[] method = cl.getMethods();
 
@@ -45,7 +49,18 @@ public class TestExe {
         for (Method test : setTest) {
             System.out.println("Checking the method " + test.getName() + "; " + test.getParameterCount());
 
-            Object object = cl.getDeclaredConstructor().newInstance();
+            Object object = null;
+            try {
+                object = cl.getDeclaredConstructor().newInstance();
+            } catch (InstantiationException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            } catch (InvocationTargetException e) {
+                throw new RuntimeException(e);
+            } catch (NoSuchMethodException e) {
+                throw new RuntimeException(e);
+            }
 
             System.out.println("    ru.denisch.Before ");
             for (Method before : setBefor) {

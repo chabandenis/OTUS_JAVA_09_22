@@ -1,4 +1,4 @@
-package ru.denis_ch.examples;
+package ru.denis_ch.my_app;
 
 import ru.denis_ch.my_test_framework.After;
 import ru.denis_ch.my_test_framework.Before;
