@@ -6,13 +6,13 @@ import java.util.*;
 public class CustomerReverseOrder {
 
     //todo: 2. надо реализовать методы этого класса
-    Stack<Customer> lst = new Stack<>();
+    private final Deque<Customer> stack = new ArrayDeque<>();
 
     public void add(Customer customer) {
-        lst.push(customer);
+        stack.push(customer);
     }
 
     public Customer take() {
-        return lst.pop(); // это "заглушка, чтобы скомилировать"
+        return stack.pop(); // это "заглушка, чтобы скомилировать"
     }
 }
