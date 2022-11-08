@@ -1,4 +1,4 @@
-package ru.denis_ch;// запуск теста
+package ru.denis_ch.my_test_framework;
 
 
 import java.lang.reflect.InvocationTargetException;
@@ -7,18 +7,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class TestExe {
-    // всего до
     private int allCntBefore;
-    // тестов
     private int allCntTest;
-    // всего тестов после
     private int allCntAfter;
 
-    // ошибок до
     private int errCntBefore;
-    // ошибок тестов
     private int errCntTest;
-    // ошибок после
     private int errCntAfter;
 
 

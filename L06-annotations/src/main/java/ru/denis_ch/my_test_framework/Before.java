@@ -1,4 +1,4 @@
-package ru.denis_ch;// библиотека для тестирования
+package ru.denis_ch.my_test_framework;// библиотека для тестирования
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -6,6 +6,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Test {
+public @interface Before {
 
 }

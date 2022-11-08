@@ -1,4 +1,8 @@
-package ru.denis_ch;
+package ru.denis_ch.examples;
+
+import ru.denis_ch.my_test_framework.After;
+import ru.denis_ch.my_test_framework.Before;
+import ru.denis_ch.my_test_framework.Test;
 
 public class TestExample {
 
