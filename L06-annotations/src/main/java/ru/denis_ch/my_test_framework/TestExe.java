@@ -15,13 +15,11 @@ public class TestExe {
     private int errCntAfter;
 
 
-    public void do_test(String className) {
+    public void doTest(String className) {
 
         Set<Method> setBefor = new HashSet<>();
         Set<Method> setTest = new HashSet<>();
         Set<Method> setAfter = new HashSet<>();
-
-        TestExe testExe = new TestExe();
 
         Class cl = null;
         try {
@@ -64,30 +62,30 @@ public class TestExe {
 
             System.out.println("    ru.denisch.Before ");
             for (Method before : setBefor) {
-                testExe.allCntBefore++;
+                allCntBefore++;
                 try {
                     before.invoke(object);
                 } catch (Exception e) {
-                    testExe.errCntBefore++;
+                    errCntBefore++;
                 }
             }
 
-            testExe.allCntTest++;
+            allCntTest++;
             System.out.println("    ru.denisch.Test " + test);
             try {
                 test.invoke(object);
             } catch (Exception e) {
-                testExe.errCntTest++;
+                errCntTest++;
             }
 
 
             System.out.println("    ru.denisch.After ");
             for (Method after : setAfter) {
-                testExe.allCntAfter++;
+                allCntAfter++;
                 try {
                     after.invoke(object);
                 } catch (Exception e) {
-                    testExe.errCntAfter++;
+                    errCntAfter++;
                 }
             }
 
@@ -95,11 +93,11 @@ public class TestExe {
 
         System.out.println("Launch statistics");
 
-        System.out.println("Total tests before " + testExe.allCntBefore + "; success " + (testExe.allCntBefore - testExe.errCntBefore) + "; errors " + testExe.errCntBefore);
+        System.out.println("Total tests before " + allCntBefore + "; success " + (allCntBefore - errCntBefore) + "; errors " + errCntBefore);
         // тестов
-        System.out.println("tests " + testExe.allCntTest + "; success " + (testExe.allCntTest - testExe.errCntTest) + "; errors " + testExe.errCntTest);
+        System.out.println("tests " + allCntTest + "; success " + (allCntTest - errCntTest) + "; errors " + errCntTest);
         // всего тестов после
-        System.out.println("Total tests after " + testExe.allCntAfter + "; success " + (testExe.allCntAfter - testExe.errCntAfter) + "; errors " + testExe.errCntAfter);
+        System.out.println("Total tests after " + allCntAfter + "; success " + (allCntAfter - errCntAfter) + "; errors " + errCntAfter);
 
     }
 }
