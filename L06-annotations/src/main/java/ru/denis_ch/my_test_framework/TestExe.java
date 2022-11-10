@@ -1,18 +1,20 @@
 package ru.denis_ch.my_test_framework;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class TestExe {
+
+    private List<Method> errorsBefore = new ArrayList<>();
+    private List<Method> errorsTests = new ArrayList<>();
+    private List<Method> errorsAfter = new ArrayList<>();
+
     private int allCntBefore;
     private int allCntTest;
     private int allCntAfter;
-
-    private int errCntBefore;
-    private int errCntTest;
-    private int errCntAfter;
-
 
     public void doTest(String className) {
 
@@ -43,8 +45,16 @@ public class TestExe {
         System.out.println("methodsTest with annotation @After " + methodsAfter.size());
         System.out.println("methodsTest with annotation @Test " + methodsTest.size());
 
+        boolean raiseBefore = false;
+        boolean raiseTest = false;
+        boolean raiseAfter = false;
+
         for (Method test : methodsTest) {
             System.out.println("Checking the method " + test.getName() + "; " + test.getParameterCount());
+
+            raiseBefore = false;
+            raiseTest = false;
+            raiseAfter = false;
 
             Object object = null;
             try {
@@ -55,42 +65,51 @@ public class TestExe {
 
             System.out.println("    ru.denisch.Before ");
             for (Method before : methodsBefore) {
-                allCntBefore++;
-                try {
-                    before.invoke(object);
-                } catch (Exception e) {
-                    errCntBefore++;
+                if (raiseBefore = false) {
+                    allCntBefore++;
+                    try {
+                        before.invoke(object);
+                    } catch (Exception e) {
+                        raiseBefore = true;
+                        errorsBefore.add(before);
+                    }
                 }
             }
 
-            allCntTest++;
-            System.out.println("    ru.denisch.Test " + test);
-            try {
-                test.invoke(object);
-            } catch (Exception e) {
-                errCntTest++;
-            }
-
-
-            System.out.println("    ru.denisch.After ");
-            for (Method after : methodsAfter) {
-                allCntAfter++;
+            if (raiseBefore = false) {
+                allCntTest++;
+                System.out.println("    ru.denisch.Test " + test);
                 try {
-                    after.invoke(object);
+                    test.invoke(object);
                 } catch (Exception e) {
-                    errCntAfter++;
+                    raiseTest = true;
+                    errorsTests.add(test);
                 }
             }
 
+            if (raiseBefore == false && raiseTest == false) {
+                System.out.println("    ru.denisch.After ");
+                for (Method after : methodsAfter) {
+                    if (raiseAfter == false) {
+                        allCntAfter++;
+                        try {
+                            after.invoke(object);
+                        } catch (Exception e) {
+                            raiseAfter = true;
+                            errorsAfter.add(after);
+                        }
+                    }
+                }
+            }
         }
 
         System.out.println("Launch statistics");
 
-        System.out.println("Total tests before " + allCntBefore + "; success " + (allCntBefore - errCntBefore) + "; errors " + errCntBefore);
+        System.out.println("Total tests before " + allCntBefore + "; success " + (allCntBefore - errorsBefore.size()) + "; errors " + errorsBefore.size());
         // тестов
-        System.out.println("tests " + allCntTest + "; success " + (allCntTest - errCntTest) + "; errors " + errCntTest);
+        System.out.println("tests " + allCntTest + "; success " + (allCntTest - errorsTests.size()) + "; errors " + errorsTests.size());
         // всего тестов после
-        System.out.println("Total tests after " + allCntAfter + "; success " + (allCntAfter - errCntAfter) + "; errors " + errCntAfter);
+        System.out.println("Total tests after " + allCntAfter + "; success " + (allCntAfter - errorsAfter.size()) + "; errors " + errorsAfter.size());
 
     }
 }
