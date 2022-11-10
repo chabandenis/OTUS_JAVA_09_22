@@ -16,6 +16,30 @@ public class TestExe {
     private int allCntTest;
     private int allCntAfter;
 
+    private void showStatistic()
+    {
+        System.out.println("Launch statistics");
+
+        // test before
+        System.out.println("Total tests before " + allCntBefore + "; success " + (allCntBefore - errorsBefore.size()) + "; errors " + errorsBefore.size());
+        for (Method m : errorsBefore) {
+            System.out.println("    Error in method before " + m.getName());
+        }
+
+        // tests
+        System.out.println("tests " + allCntTest + "; success " + (allCntTest - errorsTests.size()) + "; errors " + errorsTests.size());
+        for (Method m : errorsTests) {
+            System.out.println("    Error in test " + m.getName());
+        }
+
+        // tests after
+        System.out.println("Total tests after " + allCntAfter + "; success " + (allCntAfter - errorsAfter.size()) + "; errors " + errorsAfter.size());
+        for (Method m : errorsAfter) {
+            System.out.println("    Error in test after " + m.getName());
+        }
+    }
+
+
     public void doTest(String className) {
 
         Set<Method> methodsBefore = new HashSet<>();
@@ -106,25 +130,6 @@ public class TestExe {
                 }
             }
         }
-
-        System.out.println("Launch statistics");
-
-        // test before
-        System.out.println("Total tests before " + allCntBefore + "; success " + (allCntBefore - errorsBefore.size()) + "; errors " + errorsBefore.size());
-        for (Method m : errorsBefore) {
-            System.out.println("    Error in method before " + m.getName());
-        }
-
-        // tests
-        System.out.println("tests " + allCntTest + "; success " + (allCntTest - errorsTests.size()) + "; errors " + errorsTests.size());
-        for (Method m : errorsTests) {
-            System.out.println("    Error in test " + m.getName());
-        }
-
-        // tests after
-        System.out.println("Total tests after " + allCntAfter + "; success " + (allCntAfter - errorsAfter.size()) + "; errors " + errorsAfter.size());
-        for (Method m : errorsAfter) {
-            System.out.println("    Error in test after " + m.getName());
-        }
+        showStatistic();
     }
 }
