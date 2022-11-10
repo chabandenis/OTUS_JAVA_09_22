@@ -1,6 +1,5 @@
 package ru.denis_ch.my_test_framework;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,9 +16,9 @@ public class TestExe {
 
     public void doTest(String className) {
 
-        Set<Method> setBefor = new HashSet<>();
-        Set<Method> setTest = new HashSet<>();
-        Set<Method> setAfter = new HashSet<>();
+        Set<Method> methodsBefore = new HashSet<>();
+        Set<Method> methodsTest = new HashSet<>();
+        Set<Method> methodsAfter = new HashSet<>();
 
         Class cl = null;
         try {
@@ -32,36 +31,30 @@ public class TestExe {
 
         for (Method md : method) {
             if (md.isAnnotationPresent(Before.class)) {
-                setBefor.add(md);
+                methodsBefore.add(md);
             } else if (md.isAnnotationPresent(Test.class)) {
-                setTest.add(md);
+                methodsTest.add(md);
             } else if (md.isAnnotationPresent(After.class)) {
-                setAfter.add(md);
+                methodsAfter.add(md);
             }
         }
 
-        System.out.println("methods with annotation @Before " + setBefor.size());
-        System.out.println("methods with annotation @After " + setAfter.size());
-        System.out.println("methods with annotation @Test " + setTest.size());
+        System.out.println("methodsTest with annotation @Before " + methodsBefore.size());
+        System.out.println("methodsTest with annotation @After " + methodsAfter.size());
+        System.out.println("methodsTest with annotation @Test " + methodsTest.size());
 
-        for (Method test : setTest) {
+        for (Method test : methodsTest) {
             System.out.println("Checking the method " + test.getName() + "; " + test.getParameterCount());
 
             Object object = null;
             try {
                 object = cl.getDeclaredConstructor().newInstance();
-            } catch (InstantiationException e) {
-                throw new RuntimeException(e);
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
-            } catch (InvocationTargetException e) {
-                throw new RuntimeException(e);
-            } catch (NoSuchMethodException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
 
             System.out.println("    ru.denisch.Before ");
-            for (Method before : setBefor) {
+            for (Method before : methodsBefore) {
                 allCntBefore++;
                 try {
                     before.invoke(object);
@@ -80,7 +73,7 @@ public class TestExe {
 
 
             System.out.println("    ru.denisch.After ");
-            for (Method after : setAfter) {
+            for (Method after : methodsAfter) {
                 allCntAfter++;
                 try {
                     after.invoke(object);
