@@ -65,18 +65,20 @@ public class TestExe {
 
             System.out.println("    ru.denisch.Before ");
             for (Method before : methodsBefore) {
-                if (raiseBefore = false) {
+                if (raiseBefore == false) {
+                    System.out.println("        method: " + before.getName());
                     allCntBefore++;
                     try {
                         before.invoke(object);
                     } catch (Exception e) {
+                        System.out.println("            error during running");
                         raiseBefore = true;
                         errorsBefore.add(before);
                     }
                 }
             }
 
-            if (raiseBefore = false) {
+            if (raiseBefore == false) {
                 allCntTest++;
                 System.out.println("    ru.denisch.Test " + test);
                 try {
@@ -91,10 +93,12 @@ public class TestExe {
                 System.out.println("    ru.denisch.After ");
                 for (Method after : methodsAfter) {
                     if (raiseAfter == false) {
+                        System.out.println("        method: " + after.getName());
                         allCntAfter++;
                         try {
                             after.invoke(object);
                         } catch (Exception e) {
+                            System.out.println("            error during running: ");
                             raiseAfter = true;
                             errorsAfter.add(after);
                         }
@@ -105,11 +109,22 @@ public class TestExe {
 
         System.out.println("Launch statistics");
 
+        // test before
         System.out.println("Total tests before " + allCntBefore + "; success " + (allCntBefore - errorsBefore.size()) + "; errors " + errorsBefore.size());
-        // тестов
-        System.out.println("tests " + allCntTest + "; success " + (allCntTest - errorsTests.size()) + "; errors " + errorsTests.size());
-        // всего тестов после
-        System.out.println("Total tests after " + allCntAfter + "; success " + (allCntAfter - errorsAfter.size()) + "; errors " + errorsAfter.size());
+        for (Method m : errorsBefore) {
+            System.out.println("    Error in method before " + m.getName());
+        }
 
+        // tests
+        System.out.println("tests " + allCntTest + "; success " + (allCntTest - errorsTests.size()) + "; errors " + errorsTests.size());
+        for (Method m : errorsTests) {
+            System.out.println("    Error in test " + m.getName());
+        }
+
+        // tests after
+        System.out.println("Total tests after " + allCntAfter + "; success " + (allCntAfter - errorsAfter.size()) + "; errors " + errorsAfter.size());
+        for (Method m : errorsAfter) {
+            System.out.println("    Error in test after " + m.getName());
+        }
     }
 }

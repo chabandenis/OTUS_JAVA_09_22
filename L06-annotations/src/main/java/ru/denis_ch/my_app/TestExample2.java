@@ -4,19 +4,16 @@ import ru.denis_ch.my_test_framework.After;
 import ru.denis_ch.my_test_framework.Before;
 import ru.denis_ch.my_test_framework.Test;
 
-public class TestExample {
+public class TestExample2 {
 
     @Before
     public void startBefore1() throws Exception {
         System.out.println("        do startBefore1");
-        throw new Exception("error do startBefore1");
-        //return;
     }
 
     @Before
     public void startBefore2() {
         System.out.println("        do startBefore2");
-
         return;
     }
 
