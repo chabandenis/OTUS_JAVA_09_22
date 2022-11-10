@@ -8,35 +8,37 @@ import java.util.Set;
 
 public class TestExe {
 
-    private List<Method> errorsBefore = new ArrayList<>();
-    private List<Method> errorsTests = new ArrayList<>();
-    private List<Method> errorsAfter = new ArrayList<>();
+    private List<Description> errorsTests = new ArrayList<>();
 
     private int allCntBefore;
     private int allCntTest;
     private int allCntAfter;
+
+    private int getCount(String whenStop){
+        int i = 0;
+        for (Description description : errorsTests){
+            if (description.getWhenStop() == whenStop){
+                i++;
+            }
+        }
+        return i;
+    }
 
     private void showStatistic()
     {
         System.out.println("Launch statistics");
 
         // test before
-        System.out.println("Total tests before " + allCntBefore + "; success " + (allCntBefore - errorsBefore.size()) + "; errors " + errorsBefore.size());
-        for (Method m : errorsBefore) {
-            System.out.println("    Error in method before " + m.getName());
-        }
+        System.out.println("Total tests before " + allCntBefore + "; success " + (allCntBefore - getCount("before")) + "; errors " + getCount("before"));
 
         // tests
         System.out.println("tests " + allCntTest + "; success " + (allCntTest - errorsTests.size()) + "; errors " + errorsTests.size());
-        for (Method m : errorsTests) {
-            System.out.println("    Error in test " + m.getName());
+        for (Description m : errorsTests) {
+            System.out.println("    Error in test " + m.getMethod() + "; reason " + m.getReason());
         }
 
         // tests after
-        System.out.println("Total tests after " + allCntAfter + "; success " + (allCntAfter - errorsAfter.size()) + "; errors " + errorsAfter.size());
-        for (Method m : errorsAfter) {
-            System.out.println("    Error in test after " + m.getName());
-        }
+        System.out.println("Total tests after " + allCntAfter + "; success " + (allCntAfter - getCount("after")) + "; errors " + getCount("after"));
     }
 
 
@@ -97,7 +99,7 @@ public class TestExe {
                     } catch (Exception e) {
                         System.out.println("            error during running");
                         raiseBefore = true;
-                        errorsBefore.add(before);
+                        errorsTests.add(new Description("before", test, before));
                     }
                 }
             }
@@ -109,7 +111,7 @@ public class TestExe {
                     test.invoke(object);
                 } catch (Exception e) {
                     raiseTest = true;
-                    errorsTests.add(test);
+                    errorsTests.add(new Description("test",test, null));
                 }
             }
 
@@ -124,7 +126,7 @@ public class TestExe {
                         } catch (Exception e) {
                             System.out.println("            error during running: ");
                             raiseAfter = true;
-                            errorsAfter.add(after);
+                            errorsTests.add(new Description("after", test, after));
                         }
                     }
                 }
