@@ -1,4 +1,4 @@
-package ru.chaban.service;
+package ru.denis_ch.service;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

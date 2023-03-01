@@ -1,6 +1,6 @@
 package ru.denis_ch.domain;
 
-import ru.chaban.service.Log;
+import ru.denis_ch.service.Log;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
