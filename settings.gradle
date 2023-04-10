@@ -7,6 +7,8 @@ include 'L02-gradle2-libApiUse'
 
 include 'L03-qa'
 include 'L04-generics'
+include 'L06-annotations'
+include 'Log_new'
 
 include 'L08-gc:demo'
 include 'L08-gc:homework'
